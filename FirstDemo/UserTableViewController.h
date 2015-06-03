@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  UserTableViewController.h
 //  FirstDemo
 //
 //  Created by jov jov on 5/27/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface UserTableViewController : UITableViewController
 
 @end
-
