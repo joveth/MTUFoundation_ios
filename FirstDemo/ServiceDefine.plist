@@ -129,10 +129,8 @@
 		<string>ea9518</string>
 	</dict>
 	<dict>
-		<key>service_id</key>
-		<integer>7</integer>
 		<key>service_title</key>
-		<string>关于积极会</string>
+		<string>关于基金会</string>
 		<key>service_icon</key>
 		<string>about_logo.png</string>
 		<key>width</key>

@@ -1,5 +1,5 @@
 //
-//  MainViewController.h
+//  HomeViewController.h
 //  FirstDemo
 //
 //  Created by jov jov on 5/27/15.
@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainViewController : UIViewController
+@interface MenuViewController : UITabBarController
+- (IBAction)backToMenu:(UIStoryboardSegue *)segue;
 
 @end

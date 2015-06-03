@@ -1,5 +1,5 @@
 //
-//  HomeViewController.h
+//  MainViewController.h
 //  FirstDemo
 //
 //  Created by jov jov on 5/27/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeViewController : UITabBarController
+@interface HomeViewController : UIViewController
 
 @end
