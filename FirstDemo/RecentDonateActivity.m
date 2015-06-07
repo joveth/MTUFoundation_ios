@@ -1,42 +1,31 @@
 //
-//  NewsActivity.m
+//  RecentDonateActivity.m
 //  FirstDemo
 //
-//  Created by jov jov on 6/3/15.
+//  Created by jov jov on 6/7/15.
 //  Copyright (c) 2015 jov jov. All rights reserved.
 //
 
-#import "NewsActivity.h"
+#import "RecentDonateActivity.h"
 #import "MainService.h"
-#import "MBProgressHUD.h"
-#import "NewsBean.h"
-#import "NewsCell.h"
+#import "DonateCell.h"
+#import "ThankBean.h"
 #import "MJRefresh.h"
 
-@interface NewsActivity ()
+@interface RecentDonateActivity ()
 
 @end
 
-@implementation NewsActivity{
-
+@implementation RecentDonateActivity{
     NSMutableArray *items;
     NSInteger pageNo;
     NSString *totalPage;
-
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     pageNo=0;
     items = [[NSMutableArray alloc] init];
-//    // 设置文字
-//    [self.tableView.footer setTitle:@"加载更多" forState:MJRefreshFooterStateIdle];
-//    [self.tableView.footer setTitle:@"正在加载..." forState:MJRefreshFooterStateRefreshing];
-//    [self.tableView.footer setTitle:@"没有更多了" forState:MJRefreshFooterStateNoMoreData];
-//    [self.tableView.header setTitle:@"下拉刷新" forState:MJRefreshHeaderStateIdle];
-//    self.tableView.header.updatedTimeHidden = YES;
-//    [self.tableView.header setTitle:@"正在刷新..." forState:MJRefreshHeaderStatePulling];
-//    
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -53,7 +42,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -61,52 +49,37 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(items){
-        
-        return [items count];
-    }else{
-        return 0;
-    }
+   return [items count];
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-//    static NSString *cellidentifier = @"cellIdentifier";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellidentifier];
-//        cell.backgroundColor = [UIColor whiteColor];
-//        cell.tintColor = [UIColor greenColor];
-//    }
     
-    static NSString *newsCellIdentifier = @"NewsCellId";
+    static NSString *newsCellIdentifier = @"DonateCellId";
     
-    static BOOL nibsRegistered = NO;
-    if (!nibsRegistered) {
-        UINib *nib = [UINib nibWithNibName:@"NewsCell" bundle:nil];
+    static BOOL nibDonateRegistered = NO;
+    if (!nibDonateRegistered) {
+        UINib *nib = [UINib nibWithNibName:@"DonateCell" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:newsCellIdentifier];
-        nibsRegistered = YES;
+        nibDonateRegistered = YES;
     }
     
-    NewsCell *cell = [tableView dequeueReusableCellWithIdentifier:newsCellIdentifier];
-    NewsBean *bean = [items objectAtIndex:indexPath.row];
+    DonateCell *cell = [tableView dequeueReusableCellWithIdentifier:newsCellIdentifier];
+    ThankBean *bean = [items objectAtIndex:indexPath.row];
     if(bean){
-        cell.title.text =bean.title;
+        cell.name.text = bean.username;
         cell.date.text = bean.date;
-        UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:bean.img]]];
-        
-        cell.image.image = image;
+        cell.amount.text = bean.amount;
+        cell.item.text =bean.item;
     }
     
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return 80;
 }
-- (IBAction)onBackBtnClick:(id)sender {
-    //[self dismissViewControllerAnimated:YES completion:nil];
-}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -125,9 +98,9 @@
 }
 -(void)loadData{
     
-    [MainService queryNewsWithPageNo:0 andCallBack:^(NSMutableArray *result){
+    [MainService queryRecendDonateWithPageNo:0 andCallBack:^(NSMutableArray *result){
         items=result;
-        NewsBean *bean = [items objectAtIndex:0];
+        ThankBean *bean = [items objectAtIndex:0];
         if(bean&&bean.totalPage){
             totalPage = bean.totalPage;
         }
@@ -142,18 +115,19 @@
         totalPage=@"1";
     }
     
-     NSLog(@"pageNobef=%d,total=%@",pageNo,totalPage);
+    NSLog(@"pageNobef=%d,total=%@",pageNo,totalPage);
     if(pageNo>totalPage.intValue){
         pageNo = totalPage.intValue;
         [self.tableView.footer endRefreshing];
         //[self.tableView.footer noticeNoMoreData];
         return;
     }
+    //self.tableView.footer.hidden=NO;
     pageNo+=1;
-    NSLog(@"pageNo=%d",pageNo);
-    [MainService queryNewsWithPageNo:pageNo andCallBack:^(NSMutableArray *result){
+    NSLog(@"pageNo=%d,totalPage=%@",pageNo,totalPage);
+    [MainService queryRecendDonateWithPageNo:pageNo andCallBack:^(NSMutableArray *result){
         if(result){
-           
+            
             for(int i=0;i<[result count];i++){
                 [items addObject:[result objectAtIndex:i]];
             }
@@ -161,8 +135,9 @@
         }
         
         [self.tableView.footer endRefreshing];
+        //self.tableView.footer.hidden=YES;
     }];
-
+    
 }
 
 @end

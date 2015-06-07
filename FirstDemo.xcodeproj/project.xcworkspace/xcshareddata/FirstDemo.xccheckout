@@ -7,18 +7,26 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>4C701464-3BA7-4CC4-88C0-D6BF07DFACAD</string>
 	<key>IDESourceControlProjectName</key>
-	<string>FirstDemo</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>2A8CC76D0984F5186F869B6CBF35034B58A5ACD9</key>
+		<string>https://github.com/CoderMJLee/MJRefresh.git</string>
 		<key>35E07DB2904434037689E5E36E520B14B0FEB3B9</key>
 		<string>https://github.com/joveth/MTUFoundation_ios.git</string>
+		<key>4182765C525509B305166AB949D5935FD5C85212</key>
+		<string>https://github.com/jdg/MBProgressHUD.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>FirstDemo.xcodeproj</string>
+	<string>FirstDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>2A8CC76D0984F5186F869B6CBF35034B58A5ACD9</key>
+		<string>../../../MJRefresh</string>
 		<key>35E07DB2904434037689E5E36E520B14B0FEB3B9</key>
 		<string>../..</string>
+		<key>4182765C525509B305166AB949D5935FD5C85212</key>
+		<string>../../../MBProgressHUD</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/joveth/MTUFoundation_ios.git</string>
@@ -35,6 +43,22 @@
 			<string>35E07DB2904434037689E5E36E520B14B0FEB3B9</string>
 			<key>IDESourceControlWCCName</key>
 			<string>FirstDemo</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4182765C525509B305166AB949D5935FD5C85212</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MBProgressHUD</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2A8CC76D0984F5186F869B6CBF35034B58A5ACD9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MJRefresh</string>
 		</dict>
 	</array>
 </dict>

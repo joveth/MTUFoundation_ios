@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MessageViewController : UIViewController
+@interface NewsViewController : UIViewController
 
 @end

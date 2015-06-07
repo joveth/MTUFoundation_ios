@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 jov jov. All rights reserved.
 //
 
-#import "MessageViewController.h"
+#import "NewsViewController.h"
 
-@interface MessageViewController ()
+@interface NewsViewController ()
 
 @end
 
-@implementation MessageViewController
+@implementation NewsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -200,7 +200,6 @@
                 
             }
         }
-        NSLog(@"ss %d",alignBottom);
         SWServiceButton *btn = [[SWServiceButton alloc]initWithFrame:frame andTitle:service.serviceTitle andAlignRight:alignRight withImageStyle:imageStyle andBottomm:alignBottom];
         
         //    UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
