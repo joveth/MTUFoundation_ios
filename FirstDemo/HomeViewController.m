@@ -12,6 +12,7 @@
 #import "SWServiceDefine.h"
 #import "SWServiceButton.h"
 #import "SWDefine.h"
+#import "CommonData.h"
 
 @interface HomeViewController ()
 {
@@ -41,6 +42,8 @@
     }else if(btn.tag==7){
         [self performSegueWithIdentifier:@"showAboutId" sender:self];
     }else if(btn.tag==8){
+        [CommonData shareInstance].title=@"捐赠说明";
+        [CommonData shareInstance].url=@"http://edf.shmtu.edu.cn/donate/brief.htm";
         [self performSegueWithIdentifier:@"showDonateDescId" sender:self];
     }else if(btn.tag==9){
         [self performSegueWithIdentifier:@"showMoreId" sender:self];

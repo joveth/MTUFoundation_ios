@@ -26,6 +26,8 @@
     [super viewDidLoad];
     pageNo=0;
     items = [[NSMutableArray alloc] init];
+    
+    self.tableView.tableFooterView=[[UIView alloc]init];
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -34,7 +36,7 @@
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
-    [self loadData];
+    [self.tableView.header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,13 +59,9 @@
 {
     
     static NSString *newsCellIdentifier = @"DonateCellId";
-    
-    static BOOL nibDonateRegistered = NO;
-    if (!nibDonateRegistered) {
+
         UINib *nib = [UINib nibWithNibName:@"DonateCell" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:newsCellIdentifier];
-        nibDonateRegistered = YES;
-    }
     
     DonateCell *cell = [tableView dequeueReusableCellWithIdentifier:newsCellIdentifier];
     ThankBean *bean = [items objectAtIndex:indexPath.row];
@@ -97,16 +95,18 @@
     
 }
 -(void)loadData{
-    
+    self.tableView.footer.hidden=YES;
     [MainService queryRecendDonateWithPageNo:0 andCallBack:^(NSMutableArray *result){
         items=result;
         ThankBean *bean = [items objectAtIndex:0];
         if(bean&&bean.totalPage){
             totalPage = bean.totalPage;
         }
-        [self.tableView reloadData];
+        
         [self.tableView.header endRefreshing];
         pageNo=0;
+        self.tableView.footer.hidden=NO;
+        [self.tableView reloadData];
     }];
 }
 
@@ -116,8 +116,8 @@
     }
     
     NSLog(@"pageNobef=%d,total=%@",pageNo,totalPage);
-    if(pageNo>totalPage.intValue){
-        pageNo = totalPage.intValue;
+    if(pageNo>totalPage.integerValue){
+        pageNo = totalPage.integerValue;
         [self.tableView.footer endRefreshing];
         //[self.tableView.footer noticeNoMoreData];
         return;
@@ -131,11 +131,11 @@
             for(int i=0;i<[result count];i++){
                 [items addObject:[result objectAtIndex:i]];
             }
-            [self.tableView reloadData];
         }
         
         [self.tableView.footer endRefreshing];
         //self.tableView.footer.hidden=YES;
+        [self.tableView reloadData];
     }];
     
 }

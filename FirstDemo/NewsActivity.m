@@ -12,6 +12,7 @@
 #import "NewsBean.h"
 #import "NewsCell.h"
 #import "MJRefresh.h"
+#import "CommonData.h"
 
 @interface NewsActivity ()
 
@@ -36,7 +37,9 @@
 //    [self.tableView.header setTitle:@"下拉刷新" forState:MJRefreshHeaderStateIdle];
 //    self.tableView.header.updatedTimeHidden = YES;
 //    [self.tableView.header setTitle:@"正在刷新..." forState:MJRefreshHeaderStatePulling];
-//    
+//
+    self.tableView.tableFooterView=[[UIView alloc]init];
+    
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -45,7 +48,7 @@
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     }
-    [self loadData];
+    [self.tableView.header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,12 +85,9 @@
     
     static NSString *newsCellIdentifier = @"NewsCellId";
     
-    static BOOL nibsRegistered = NO;
-    if (!nibsRegistered) {
+
         UINib *nib = [UINib nibWithNibName:@"NewsCell" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:newsCellIdentifier];
-        nibsRegistered = YES;
-    }
     
     NewsCell *cell = [tableView dequeueReusableCellWithIdentifier:newsCellIdentifier];
     NewsBean *bean = [items objectAtIndex:indexPath.row];
@@ -124,15 +124,17 @@
     
 }
 -(void)loadData{
-    
+    self.tableView.footer.hidden=YES;
     [MainService queryNewsWithPageNo:0 andCallBack:^(NSMutableArray *result){
         items=result;
         NewsBean *bean = [items objectAtIndex:0];
         if(bean&&bean.totalPage){
             totalPage = bean.totalPage;
         }
-        [self.tableView reloadData];
+        
         [self.tableView.header endRefreshing];
+        self.tableView.footer.hidden=NO;
+        [self.tableView reloadData];
         pageNo=0;
     }];
 }
@@ -142,27 +144,34 @@
         totalPage=@"1";
     }
     
-     NSLog(@"pageNobef=%d,total=%@",pageNo,totalPage);
-    if(pageNo>totalPage.intValue){
-        pageNo = totalPage.intValue;
+    if(pageNo>totalPage.integerValue){
+        pageNo = totalPage.integerValue;
         [self.tableView.footer endRefreshing];
         //[self.tableView.footer noticeNoMoreData];
         return;
     }
     pageNo+=1;
-    NSLog(@"pageNo=%d",pageNo);
     [MainService queryNewsWithPageNo:pageNo andCallBack:^(NSMutableArray *result){
         if(result){
            
             for(int i=0;i<[result count];i++){
                 [items addObject:[result objectAtIndex:i]];
             }
-            [self.tableView reloadData];
         }
         
         [self.tableView.footer endRefreshing];
+        [self.tableView reloadData];
     }];
 
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NewsBean *bean = [items objectAtIndex:indexPath.row];
+    if(bean){
+        [CommonData shareInstance].url = bean.url;
+        [self performSegueWithIdentifier:@"showNewsDetail" sender:self];
+        
+    }
 }
 
 @end

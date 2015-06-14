@@ -129,6 +129,8 @@
 		<string>ea9518</string>
 	</dict>
 	<dict>
+		<key>service_id</key>
+		<string>7</string>
 		<key>service_title</key>
 		<string>关于基金会</string>
 		<key>service_icon</key>

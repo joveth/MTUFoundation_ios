@@ -180,4 +180,65 @@
     callback(nil);
 }
 
++(void)getMainContentWithUrl:(NSString *)url andSuccess:(CallBackString)success andErr:(CallBackString)err{
+    NSData *htmlData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
+    
+    //NSData *toHtmlData = [self toUTF8:htmlData];
+    
+    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+    
+    
+    NSArray *aArray = [xpathParser searchWithXPathQuery:@"//div[@id='block-system-main']"];
+    if([aArray count]>0){
+        TFHppleElement *pageEle = [aArray objectAtIndex:0];
+        NSArray *cont=[pageEle searchWithXPathQuery:@"//div[@class='content']"];
+        TFHppleElement *contle = [cont objectAtIndex:[cont count]-1];
+        NSString *ret  = [contle content];
+        if(success){
+            success(ret);
+        }
+        return;
+    }
+    if(err){
+        err(nil);
+    }
+}
+
++(void)getNewsContentWithUrl:(NSString *)url andWidth:(NSInteger)width andSuccess:(CallBackString)success andErr:(CallBackString)err{
+    NSData *htmlData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:url]];
+    
+    //NSData *toHtmlData = [self toUTF8:htmlData];
+    
+    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+    
+    
+    NSArray *aArray = [xpathParser searchWithXPathQuery:@"//div[@id='block-system-main']"];
+    if([aArray count]>0){
+        TFHppleElement *pageEle = [aArray objectAtIndex:0];
+        NSArray *cont=[pageEle searchWithXPathQuery:@"//div[@class='content']"];
+        TFHppleElement *contle = [cont objectAtIndex:[cont count]-1];
+        NSString *ret  = [contle content];
+        NSArray *img = [contle searchWithXPathQuery:@"//img"];
+        
+        if([img count]>0){
+            NSString *imagStr =@"";
+            for(int i=0;i<[img count];i++){
+                TFHppleElement  *ele=[img objectAtIndex:i];
+                NSString *src =[NSString stringWithFormat:@"<br><img src=%@ width=%ld height=200 style='margin-left:5px' />" ,[[ele attributes] objectForKey:@"src"] ,width];
+                imagStr= [imagStr stringByAppendingString:src];
+                
+            }
+            ret = [ret stringByAppendingString:imagStr];
+        }
+        
+        if(success){
+            success(ret);
+        }
+        return;
+    }
+    if(err){
+        err(nil);
+    }
+}
+
 @end
