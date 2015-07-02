@@ -213,7 +213,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="新闻公告" id="4t4-4B-Q72"/>
                     <connections>
-                        <segue destination="eIt-kU-Sf0" kind="showDetail" identifier="showNewsDetail" id="z7h-R6-Zm1"/>
+                        <segue destination="eIt-kU-Sf0" kind="presentation" identifier="showNewsDetail" id="z7h-R6-Zm1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2cq-0t-1R4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -457,7 +457,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="eIt-kU-Sf0" kind="showDetail" identifier="showNewsDetail" id="REj-dE-W5w"/>
+                        <segue destination="eIt-kU-Sf0" kind="presentation" identifier="showNewsDetail" id="REj-dE-W5w"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PNc-HT-NFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -477,12 +477,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zn9-b9-sNA">
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zn9-b9-sNA">
                                 <rect key="frame" x="0.0" y="-8" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Zn9-b9-sNA" firstAttribute="leading" secondItem="4Bv-CH-cXS" secondAttribute="leading" id="23L-Ya-EHf"/>
+                            <constraint firstAttribute="trailing" secondItem="Zn9-b9-sNA" secondAttribute="trailing" id="7wt-vB-Fz2"/>
+                            <constraint firstItem="R92-Cl-4pa" firstAttribute="top" secondItem="Zn9-b9-sNA" secondAttribute="bottom" constant="8" symbolic="YES" id="CjI-fN-8up"/>
+                            <constraint firstItem="Zn9-b9-sNA" firstAttribute="top" secondItem="4Bv-CH-cXS" secondAttribute="topMargin" constant="-8" id="jrk-dv-psw"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="新闻公告" id="8f0-wM-G35">
                         <barButtonItem key="leftBarButtonItem" image="iconfont_back.png" id="anc-56-Gfr">
@@ -2133,12 +2139,12 @@
         <image name="record_nor.png" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="z7h-R6-Zm1"/>
         <segue reference="kxq-jw-kEM"/>
-        <segue reference="wzs-rx-qbV"/>
         <segue reference="Tg8-th-6KJ"/>
+        <segue reference="wzs-rx-qbV"/>
         <segue reference="fhu-8T-L9n"/>
         <segue reference="OBY-SO-FbB"/>
         <segue reference="oep-fD-H5p"/>
+        <segue reference="REj-dE-W5w"/>
     </inferredMetricsTieBreakers>
 </document>
